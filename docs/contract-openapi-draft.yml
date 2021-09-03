@@ -1,0 +1,398 @@
+openapi: 3.0.1
+info:
+  title: User Service
+  description: 'Example of a user management with its basic operations: create user, delete user, edit user by id, list users and get user by id.'
+  version: 1.0.0
+servers:
+  - url: http://{domain}:{server}/{basePath}
+    variables:
+      domain:
+        default: 'localhost'
+      server:
+        default: '8080'
+      basePath:
+        default: 'api/v1'
+tags:
+  - name: user
+    description: Operations to manage users
+paths:
+  '/users':
+    post:
+      tags:
+        - user
+      description: Create new user
+      summary: Create new user
+      operationId: create
+      requestBody:
+        $ref: '#/components/requestBodies/UserCreateRequest'
+      responses:
+        '201':
+          description: Successful created user.
+
+        '400':
+          description: Validation exception.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ValidationErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    get:
+      tags:
+        - user
+      description: List of users
+      summary: List of users
+      operationId: list
+      parameters:
+        - name: page
+          in: query
+          description: Number of the page that will be returned starting at 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: Number of results per page (20 by default)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          description: Sorted results by field and order (use asc/desc)
+          required: false
+          schema:
+            type: string
+          examples:
+            firstname.asc:
+              value: "firstname.asc"
+              summary: "Sorted results by firstname ascendant"
+            age.desc:
+              value: "age.desc"
+              summary: "Sorted results by age descendant"
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UserListResponse'
+        '400':
+          description: |
+            Bad request
+            Available codes:
+              - PAGING_INVALID_PAGE: Number of the page is not valid/is not a number
+              - PAGING_INVALID_SIZE: Number of results per page is not valid/is not a number
+              - SORTING_INVALID_FIELD: Field does not exist or it is not sortable
+              - SORTING_INVALID_ORDER: Order is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/BadRequest'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    put:
+      tags:
+        - user
+      description: Update user
+      summary: Update user
+      operationId: update
+      requestBody:
+        $ref: '#/components/requestBodies/UserUpdateRequest'
+      responses:
+        '201':
+          description: Successful updated user.
+
+        '400':
+          description: Validation exception.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ValidationErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+  '/users/{userId}':
+    get:
+      tags:
+        - user
+      description: Get user by id
+      summary: Get user by id
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UserInfoResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+        - user
+      description: Delete user by id
+      summary: Delete user by id
+      operationId: delete
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '201':
+          description: Successful created user.
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+components:
+  requestBodies:
+    UserCreateRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - firstname
+              - lastname
+              - age
+              - language
+              - rank
+              - country
+              - active
+            properties:
+              firstname:
+                type: string
+              lastname:
+                type: string
+              age:
+                type: integer
+                format: int32
+              language:
+                type: string
+              rank:
+                type: integer
+                format: int32
+              country:
+                type: string
+              active:
+                type: boolean
+    UserUpdateRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - firstname
+              - lastname
+              - age
+              - language
+              - rank
+              - country
+              - active
+            properties:
+              firstname:
+                type: string
+              lastname:
+                type: string
+              age:
+                type: integer
+                format: int32
+              language:
+                type: string
+              rank:
+                type: integer
+                format: int32
+              country:
+                type: string
+              active:
+                type: boolean
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+            properties:
+              code:
+                type: string
+    ErrorResponse:
+      description: Generic error response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+    UserInfoResponse:
+      description: User general info response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: '#/components/schemas/UserResponse'
+    UserListResponse:
+      description: List of users
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              page:
+                $ref: '#/components/schemas/PageResponse'
+              users:
+                $ref: '#/components/schemas/UserSummaryResponse'
+    ValidationErrorResponse:
+      description: Validation error response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - errors
+            properties:
+              errors:
+                $ref: '#/components/schemas/FormErrors'
+  schemas:
+    FieldErrors:
+      required:
+        - codes
+        - field
+      type: object
+      properties:
+        field:
+          type: string
+          description: Name of the field
+        codes:
+          type: array
+          description: List of error codes
+          items:
+            type: string
+            description: List of error codes
+      description: Errors on each field
+    FormErrors:
+      required:
+        - fields
+        - form
+      type: object
+      properties:
+        fields:
+          type: array
+          description: Errors on each field
+          items:
+            $ref: '#/components/schemas/FieldErrors'
+        form:
+          type: array
+          description: General form errors or referring to several fields
+          items:
+            type: string
+            description: General form errors or referring to several fields
+    PageResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    UserResponse:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        age:
+          type: integer
+          format: int32
+        language:
+          type: string
+        rank:
+          type: integer
+          format: int32
+        country:
+          type: string
+        active:
+          type: boolean
+    UserSummaryResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDetailsResponse'
+    UserDetailsResponse:
+      type: object
+      required:
+        - firstname
+        - lastname
+        - age
+        - country
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        age:
+          type: integer
+          format: int32
+        country:
+          type: string
