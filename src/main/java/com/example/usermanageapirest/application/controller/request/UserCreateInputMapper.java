@@ -1,6 +1,7 @@
 package com.example.usermanageapirest.application.controller.request;
 
 import com.example.usermanageapirest.application.user.Mapper;
+import com.example.usermanageapirest.application.validator.annotations.Country;
 import com.example.usermanageapirest.domain.services.input.UserCreateInput;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class UserCreateInputMapper implements Mapper<UserCreateRequest, UserCrea
 			.setAge(request.getAge())
 			.setLanguage(request.getLanguage())
 			.setRank(request.getRank())
-			.setCountry(request.getCountry())
+			.setCountry(request.getCountryId().getCountry().orElse(null))
 			.setActive(request.getActive());
 	}
 

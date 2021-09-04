@@ -9,9 +9,13 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,10 +24,9 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 @Data
 @AllArgsConstructor
-@Entity()
-@Table(name = "users")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @NoArgsConstructor
+@Entity
+@Table(name = "users")
 public class User {
 
 	@Id
@@ -32,10 +35,10 @@ public class User {
 	private int id;
 
 	@NotNull
-	private String firstname;
+	private String firstName;
 
 	@NotNull
-	private String lastname;
+	private String lastName;
 
 	@NotNull
 	private int age;
@@ -46,9 +49,12 @@ public class User {
 	@NotNull
 	private int rank;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "country_id", nullable = false, foreignKey = @ForeignKey(name = "user_country_id_fk"))
 	@NotNull
-	private String country;
+	private Country country;
 
 	@NotNull
 	private String active;
+
 }

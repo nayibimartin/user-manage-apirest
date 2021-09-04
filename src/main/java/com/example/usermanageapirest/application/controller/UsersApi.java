@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
-@Tag(name = "user", description = "Operations to manage users")
+@Tag(name = "User", description = "Operations to manage users")
 public interface UsersApi {
 
 	@Operation(
@@ -24,7 +24,7 @@ public interface UsersApi {
 	)
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "201", description = "Successful created user."),
-		@ApiResponse(responseCode = "400", description = "Validation exception.", content = @Content(mediaType = "application/json", schema = @Schema(/*implementation = ValidationErrorResponse.class*/))),
+		@ApiResponse(responseCode = "400", description = "Validation exception.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
 		@ApiResponse(responseCode = "403", description = "Resource forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	ResponseEntity<User> create(@RequestBody(description = "New user", required = true) UserCreateRequest userCreateRequest) throws ResourceCreateException, ValidationException;

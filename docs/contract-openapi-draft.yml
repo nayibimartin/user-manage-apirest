@@ -69,7 +69,8 @@ components:
                 type: integer
                 format: int32
               country:
-                type: string
+                type: integer
+                format: int32
               active:
                 type: boolean
   responses:

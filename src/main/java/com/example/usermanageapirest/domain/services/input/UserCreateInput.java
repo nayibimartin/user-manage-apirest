@@ -1,5 +1,6 @@
 package com.example.usermanageapirest.domain.services.input;
 
+import com.example.usermanageapirest.domain.entity.Country;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,7 +13,7 @@ public class UserCreateInput {
 	private int age;
 	private String language;
 	private int rank;
-	private String country;
+	private Country country;
 	private String active;
 
 }

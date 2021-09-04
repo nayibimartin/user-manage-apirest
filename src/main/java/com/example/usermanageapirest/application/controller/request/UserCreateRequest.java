@@ -1,6 +1,10 @@
 package com.example.usermanageapirest.application.controller.request;
 
+import com.example.usermanageapirest.application.configuration.deserialize.CountryDeserializer;
+import com.example.usermanageapirest.application.configuration.deserialize.CountryParameter;
+import com.example.usermanageapirest.application.validator.annotations.Country;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,10 +46,12 @@ public class UserCreateRequest {
 	@Max(value = 5, message = "RANK_FIVE_OR_LOWER")
 	private int rank;
 
-	@JsonProperty("country")
+	@JsonProperty("countryId")
 	@Schema(required = true, description ="User's country. Validation errors: REQUIRED")
+	@JsonDeserialize(using = CountryDeserializer.class)
 	@NotNull(message = "REQUIRED")
-	private String country;
+	@Country(message = "NOT_EXISTS")
+	private CountryParameter countryId;
 
 	@JsonProperty("active")
 	@Schema(required = true, description ="Flag to indicate if user is active or not. Validation errors: REQUIRED")

@@ -1,4 +1,4 @@
-package com.example.usermanageapirest.infraestructure;
+package com.example.usermanageapirest.infraestructure.postgresql;
 
 import com.example.usermanageapirest.domain.entity.User;
 import com.example.usermanageapirest.domain.repository.UserRepository;
@@ -20,4 +20,5 @@ public class UserPostgreSQLRepository implements UserRepository {
 	public User create(User user) {
 		return repository.save(user);
 	}
+
 }
