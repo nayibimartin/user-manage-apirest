@@ -68,7 +68,7 @@ components:
               rank:
                 type: integer
                 format: int32
-              country:
+              countryId:
                 type: integer
                 format: int32
               active:

@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserApiController implements UsersApi {
 
 	private final UserServices userServices;
@@ -30,7 +32,10 @@ public class UserApiController implements UsersApi {
 	public ResponseEntity<User> create(
 		@RequestBody @Valid UserCreateRequest userCreateRequest
 	) throws ResourceCreateException, ValidationException {
-		return ResponseEntity.ok(this.userServices.create(this.userCreateMapper.map(userCreateRequest)));
+		User user=this.userServices.create(this.userCreateMapper.map(userCreateRequest));
+		URI uri= ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{userId}")
+			.buildAndExpand(user.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 
 }
