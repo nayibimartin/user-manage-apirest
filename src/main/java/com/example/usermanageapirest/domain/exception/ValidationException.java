@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class ValidationException extends Exception{
 
 	private final String value;
-
 	private final String message;
 
 }

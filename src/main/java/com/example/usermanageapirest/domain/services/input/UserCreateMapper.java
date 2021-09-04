@@ -10,12 +10,13 @@ public class UserCreateMapper implements Mapper<UserCreateInput, User> {
 	@Override
 	public User map(UserCreateInput input) {
 		return new User()
-			.setFirstname(input.getFirstname())
-			.setLastname(input.getLastname())
+			.setFirstName(input.getFirstName())
+			.setLastName(input.getLastName())
 			.setAge(input.getAge())
 			.setLanguage(input.getLanguage())
 			.setRank(input.getRank())
 			.setCountry(input.getCountry())
 			.setActive(input.getActive());
 	}
+
 }

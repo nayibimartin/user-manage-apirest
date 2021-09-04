@@ -23,7 +23,6 @@ import javax.validation.Valid;
 public class UserApiController implements UsersApi {
 
 	private final UserServices userServices;
-
 	private final Mapper<UserCreateRequest, UserCreateInput> userCreateMapper;
 
 	@Override
@@ -31,8 +30,7 @@ public class UserApiController implements UsersApi {
 	public ResponseEntity<User> create(
 		@RequestBody @Valid UserCreateRequest userCreateRequest
 	) throws ResourceCreateException, ValidationException {
-
 		return ResponseEntity.ok(this.userServices.create(this.userCreateMapper.map(userCreateRequest)));
-
 	}
+
 }

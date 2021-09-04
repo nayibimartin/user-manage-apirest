@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class UserServices {
 
 	private final UserRepository repository;
-
 	private final Mapper<UserCreateInput, User> userMapper;
 
 	@Autowired
@@ -25,9 +24,7 @@ public class UserServices {
 	}
 
 	public User create(UserCreateInput input) throws ResourceCreateException {
-
 		return repository.create(this.userMapper.map(input));
-
 	}
 
 }

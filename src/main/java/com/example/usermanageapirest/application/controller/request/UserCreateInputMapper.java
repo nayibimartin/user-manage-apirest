@@ -10,12 +10,13 @@ public class UserCreateInputMapper implements Mapper<UserCreateRequest, UserCrea
 	@Override
 	public UserCreateInput map(UserCreateRequest request) {
 		return new UserCreateInput()
-			.setFirstname(request.getFirstname())
-			.setLastname(request.getLastname())
+			.setFirstName(request.getFirstName())
+			.setLastName(request.getLastName())
 			.setAge(request.getAge())
 			.setLanguage(request.getLanguage())
 			.setRank(request.getRank())
 			.setCountry(request.getCountry())
 			.setActive(request.getActive());
 	}
+
 }

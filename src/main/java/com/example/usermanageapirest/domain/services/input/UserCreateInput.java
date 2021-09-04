@@ -7,17 +7,12 @@ import lombok.experimental.Accessors;
 @Data
 public class UserCreateInput {
 
-	private String firstname;
-
-	private String lastname;
-
+	private String firstName;
+	private String lastName;
 	private int age;
-
 	private String language;
-
 	private int rank;
-
 	private String country;
-
 	private String active;
+
 }
