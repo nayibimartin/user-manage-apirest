@@ -56,6 +56,6 @@ public class UserCreateRequest {
 	@JsonProperty("active")
 	@Schema(required = true, description ="Flag to indicate if user is active or not. Validation errors: REQUIRED")
 	@NotNull(message = "REQUIRED")
-	private String active;
+	private boolean active;
 
 }

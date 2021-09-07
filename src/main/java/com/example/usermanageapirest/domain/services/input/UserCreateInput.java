@@ -14,6 +14,6 @@ public class UserCreateInput {
 	private String language;
 	private int rank;
 	private Country country;
-	private String active;
+	private boolean active;
 
 }

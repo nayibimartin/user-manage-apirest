@@ -22,7 +22,7 @@ public class CountryDeserializer extends JsonDeserializer<CountryParameter> {
 	@Override
 	public CountryParameter deserialize(
 		JsonParser jsonParser, DeserializationContext deserializationContext
-	) throws IOException, JsonProcessingException {
+	) throws IOException{
 		int id;
 		try{
 			id=jsonParser.getIntValue();

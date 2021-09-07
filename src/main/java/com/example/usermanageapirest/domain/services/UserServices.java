@@ -30,7 +30,7 @@ public class UserServices {
 
 	public User create(UserCreateInput input) throws ResourceCreateException, ValidationException {
 		userValidator.validateLanguage(input);
-		return userRepository.create(this.userMapper.map(input));
+		return userRepository.create(input);
 	}
 
 }

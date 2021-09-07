@@ -1,12 +1,10 @@
 package com.example.usermanageapirest.domain.entity;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -55,6 +53,6 @@ public class User {
 	private Country country;
 
 	@NotNull
-	private String active;
+	private boolean active;
 
 }

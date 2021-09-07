@@ -19,6 +19,7 @@
 		<springdoc-openapi-ui.version>1.5.10</springdoc-openapi-ui.version>
 		<org.projectlombok.version>1.18.20</org.projectlombok.version>
 		<hibernate-types-52.version>2.12.1</hibernate-types-52.version>
+		<mockito-jupiter.version>2.20.0</mockito-jupiter.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -66,6 +67,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${mockito-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

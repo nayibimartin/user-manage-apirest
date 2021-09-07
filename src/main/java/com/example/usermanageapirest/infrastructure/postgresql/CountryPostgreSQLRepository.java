@@ -1,8 +1,8 @@
-package com.example.usermanageapirest.infraestructure.postgresql;
+package com.example.usermanageapirest.infrastructure.postgresql;
 
 import com.example.usermanageapirest.domain.entity.Country;
 import com.example.usermanageapirest.domain.repository.CountryRepository;
-import com.example.usermanageapirest.infraestructure.persistence.CountryRepositoryJPA;
+import com.example.usermanageapirest.infrastructure.persistence.CountryRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
