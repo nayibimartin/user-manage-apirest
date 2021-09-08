@@ -22,9 +22,4 @@ public class CountryPostgreSQLRepository implements CountryRepository {
 	public Optional<Country> find(int id) {
 		return this.repository.findById(id);
 	}
-
-	@Override
-	public String findLanguage(int id) {
-		return this.repository.findById(id).get().getLanguage();
-	}
 }

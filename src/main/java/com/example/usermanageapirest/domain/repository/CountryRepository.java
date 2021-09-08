@@ -8,6 +8,4 @@ public interface CountryRepository {
 
 	Optional<Country> find(int id);
 
-	String findLanguage(int id);
-
 }
