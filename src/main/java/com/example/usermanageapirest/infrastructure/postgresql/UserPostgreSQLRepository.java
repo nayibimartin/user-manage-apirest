@@ -13,12 +13,15 @@ import org.springframework.stereotype.Component;
 public class UserPostgreSQLRepository implements UserRepository {
 
 	private final UserRepositoryJPA repository;
-
 	private Mapper<UserCreateInput, User> mapper;
 
 	@Autowired
-	public UserPostgreSQLRepository(UserRepositoryJPA repository) {
+	public UserPostgreSQLRepository(
+		UserRepositoryJPA repository,
+		Mapper<UserCreateInput, User> mapper
+	) {
 		this.repository = repository;
+		this.mapper = mapper;
 	}
 
 	@Override

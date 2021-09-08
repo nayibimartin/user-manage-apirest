@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -21,12 +22,12 @@ public class UserCreateRequest {
 
 	@JsonProperty("firstName")
 	@Schema(required = true, description ="User's first name. Validation errors: REQUIRED")
-	@NotNull(message = "REQUIRED")
+	@NotBlank(message = "REQUIRED")
 	private String firstName;
 
 	@JsonProperty("lastName")
 	@Schema(required = true, description ="User's last name. Validation errors: REQUIRED")
-	@NotNull(message = "REQUIRED")
+	@NotBlank(message = "REQUIRED")
 	private String lastName;
 
 	@JsonProperty("age")
@@ -36,7 +37,7 @@ public class UserCreateRequest {
 
 	@JsonProperty("language")
 	@Schema(required = true, description ="User's language. Validation errors: REQUIRED")
-	@NotNull(message = "REQUIRED")
+	@NotBlank(message = "REQUIRED")
 	private String language;
 
 	@JsonProperty("rank")
