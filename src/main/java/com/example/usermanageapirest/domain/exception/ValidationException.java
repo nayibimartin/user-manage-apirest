@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ValidationException extends Exception{
+public class ValidationException extends Exception {
 
 	private final String value;
 	private final String message;

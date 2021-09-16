@@ -1,11 +1,13 @@
 package com.example.usermanageapirest.domain.services;
 
 import com.example.usermanageapirest.domain.entity.User;
+import com.example.usermanageapirest.domain.exception.ResourceCreateException;
+import com.example.usermanageapirest.domain.exception.ResourceUpdateException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.domain.repository.UserRepository;
 import com.example.usermanageapirest.domain.services.input.UserCreateInput;
-import com.example.usermanageapirest.domain.services.validator.UserCreateInputValidator;
-import com.example.usermanageapirest.exception.ResourceCreateException;
+import com.example.usermanageapirest.domain.services.input.UserInfoUpdateInput;
+import com.example.usermanageapirest.domain.services.validator.UserInputValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +15,25 @@ import org.springframework.stereotype.Service;
 public class UserServices {
 
 	private final UserRepository userRepository;
-	private final UserCreateInputValidator userValidator;
+	private final UserInputValidator validator;
 
 	@Autowired
 	public UserServices(
 		UserRepository userRepository,
-		UserCreateInputValidator userValidator
+		UserInputValidator validator
 	) {
-		this.userValidator = userValidator;
+		this.validator = validator;
 		this.userRepository = userRepository;
 	}
 
 	public User create(UserCreateInput input) throws ResourceCreateException, ValidationException {
-		userValidator.validateLanguage(input);
-		return userRepository.create(input);
+		this.validator.validateUserCreateInput(input);
+		return this.userRepository.create(input);
+	}
+
+	public User update(UserInfoUpdateInput input) throws ResourceUpdateException, ValidationException {
+		this.validator.validateUserInfoUpdateInput(input);
+		return this.userRepository.update(input);
 	}
 
 }

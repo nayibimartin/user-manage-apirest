@@ -30,7 +30,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_user")
 	@SequenceGenerator(name = "sequence_user", allocationSize = 1)
-	private int id;
+	private Integer id;
 
 	@NotNull
 	private String firstName;
@@ -39,13 +39,13 @@ public class User {
 	private String lastName;
 
 	@NotNull
-	private int age;
+	private Integer age;
 
 	@NotNull
 	private String language;
 
 	@NotNull
-	private int rank;
+	private Integer rank;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "country_id", nullable = false, foreignKey = @ForeignKey(name = "user_country_id_fk"))

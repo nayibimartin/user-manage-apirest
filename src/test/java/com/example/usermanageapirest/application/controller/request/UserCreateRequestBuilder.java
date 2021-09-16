@@ -16,4 +16,5 @@ public class UserCreateRequestBuilder extends Builder<UserCreateRequest> {
 			.setCountryId(new CountryParameterBuilder().build(index))
 			.setActive(true);
 	}
+
 }

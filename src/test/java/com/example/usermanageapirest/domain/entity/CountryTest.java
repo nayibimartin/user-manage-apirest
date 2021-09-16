@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CountryTest {
 
 	@Test
-	public void when_values_are_given_then_they_can_be_retrieved(){
-		Country actual= new Country()
+	public void when_values_are_given_then_they_can_be_retrieved() {
+		Country actual = new Country()
 			.setId(1)
 			.setName("espanna")
 			.setLanguage("espannol");

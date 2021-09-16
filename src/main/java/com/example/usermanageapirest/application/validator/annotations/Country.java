@@ -1,7 +1,6 @@
 package com.example.usermanageapirest.application.validator.annotations;
 
 import com.example.usermanageapirest.application.validator.CountryValidator;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -18,7 +17,9 @@ import java.lang.annotation.Target;
 public @interface Country {
 
 	String message() default "";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 
 }

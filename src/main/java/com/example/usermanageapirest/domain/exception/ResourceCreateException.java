@@ -1,6 +1,6 @@
-package com.example.usermanageapirest.exception;
+package com.example.usermanageapirest.domain.exception;
 
-public class ResourceCreateException extends RuntimeException{
+public class ResourceCreateException extends RuntimeException {
 
 	public ResourceCreateException(Throwable cause) {
 		super(cause);

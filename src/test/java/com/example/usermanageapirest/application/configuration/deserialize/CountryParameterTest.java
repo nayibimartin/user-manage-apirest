@@ -7,14 +7,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class CountryParameterTest {
 
 	@Test
-	public void when_object_is_created_then_data_can_be_retrieved(){
-		CountryParameter actual=new CountryParameter(Optional.of(new CountryBuilder().build(1)));
+	public void when_object_is_created_then_data_can_be_retrieved() {
+		CountryParameter actual = new CountryParameter(Optional.of(new CountryBuilder().build(1)));
 
 		assertTrue(actual.getCountry().isPresent());
 		assertEquals(new CountryBuilder().build(1), actual.getCountry().get());

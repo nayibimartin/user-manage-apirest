@@ -1,4 +1,4 @@
-package com.example.usermanageapirest.exception;
+package com.example.usermanageapirest.application.exception;
 
 public class ValueDeserializationException extends RuntimeException {
 

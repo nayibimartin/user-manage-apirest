@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public abstract class Builder<T> {
+
 	public abstract T build(int index);
 
 	public T build() {
@@ -17,4 +18,5 @@ public abstract class Builder<T> {
 			.mapToObj(this::build)
 			.collect(Collectors.toList());
 	}
+
 }

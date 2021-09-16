@@ -1,7 +1,6 @@
 package com.example.usermanageapirest.exception;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class ErrorResponse {
 	}
 
 	public void addDetail(String value, String message) {
-		details.add(new ErrorDetails(value, message));
+		this.details.add(new ErrorDetails(value, message));
 	}
 
 }

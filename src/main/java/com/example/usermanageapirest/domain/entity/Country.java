@@ -18,7 +18,7 @@ public class Country {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_country")
 	@SequenceGenerator(name = "sequence_country", allocationSize = 1)
-	private int id;
+	private Integer id;
 
 	@NotBlank
 	private String name;
