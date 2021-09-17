@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,7 @@ import java.net.URI;
 public class UserApiController implements UsersApi {
 
 	private final UserServices userServices;
-	private final Mapper<UserCreateRequest, UserCreateInput> userCreateInputMapper;
+	private final Mapper<UserCreateRequest, UserCreateInput> userCreateMapper;
 	private final UserInfoUpdateInputCreator userInfoUpdateInputCreator;
 	private final Mapper<User, UserInfoResponse> userMapper;
 
@@ -39,7 +41,7 @@ public class UserApiController implements UsersApi {
 	public ResponseEntity<User> create(
 		@RequestBody @Valid UserCreateRequest userCreateRequest
 	) throws ResourceCreateException, ValidationException {
-		User user = this.userServices.create(this.userCreateInputMapper.map(userCreateRequest));
+		User user = this.userServices.create(this.userCreateMapper.map(userCreateRequest));
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{userId}")
 			.buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -54,6 +56,15 @@ public class UserApiController implements UsersApi {
 		return ResponseEntity.ok(this.userMapper.map(
 			this.userServices.update(this.userInfoUpdateInputCreator.create(user, userUpdateRequest))
 		));
+	}
+
+	@Override
+	@DeleteMapping(value = "/{userId}")
+	public ResponseEntity<Void> delete(
+		@PathVariable Integer userId
+	) {
+		this.userServices.delete(userId);
+		return ResponseEntity.ok().build();
 	}
 
 }

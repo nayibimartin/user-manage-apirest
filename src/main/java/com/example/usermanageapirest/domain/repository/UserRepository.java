@@ -14,4 +14,5 @@ public interface UserRepository {
 
 	User update(UserInfoUpdateInput user);
 
+	void delete(Integer userId);
 }

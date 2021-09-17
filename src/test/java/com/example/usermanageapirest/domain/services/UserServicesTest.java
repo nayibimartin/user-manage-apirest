@@ -112,4 +112,10 @@ class UserServicesTest {
 		);
 	}
 
+	@Test
+	public void when_delete_then_repository_is_used() {
+		this.repository.delete(1);
+
+		Mockito.verify(this.repository).delete(1);
+	}
 }

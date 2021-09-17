@@ -58,7 +58,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserUpdateRequest'
       responses:
-        '201':
+        '200':
           description: Successful updated user.
           content:
             application/json:
@@ -76,7 +76,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/ErrorResponse'
-components:
+    delete:
+      tags:
+        - User
+      description: Delete user
+      summary: Delete user
+      operationId: delete
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful delete user.
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+  components:
   requestBodies:
     UserCreateRequest:
       content:
@@ -134,6 +163,7 @@ components:
                 format: int32
               active:
                 type: boolean
+
   responses:
     ErrorResponse:
       description: Generic error response

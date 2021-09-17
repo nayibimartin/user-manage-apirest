@@ -9,6 +9,7 @@ import com.example.usermanageapirest.domain.services.input.UserCreateInput;
 import com.example.usermanageapirest.domain.services.input.UserInfoUpdateInput;
 import com.example.usermanageapirest.domain.services.validator.UserInputValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,4 +37,7 @@ public class UserServices {
 		return this.userRepository.update(input);
 	}
 
+	public void delete(Integer userId) {
+		this.userRepository.delete(userId);
+	}
 }
