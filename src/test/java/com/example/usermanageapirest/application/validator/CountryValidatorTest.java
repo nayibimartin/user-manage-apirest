@@ -9,40 +9,41 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.validation.ConstraintValidatorContext;
-
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class CountryValidatorTest {
 
 	@InjectMocks
-	CountryValidator validator;
+	private CountryValidator validator;
 
 	@Mock
-	ConstraintValidatorContext context;
+	private ConstraintValidatorContext context;
 
 	@Test
-	public void when_country_parameter_is_null_then_is_valid(){
-		boolean actual=validator.isValid(null,this.context);
+	public void when_country_parameter_is_null_then_is_valid() {
+		boolean actual = this.validator.isValid(null, this.context);
 
 		assertTrue(actual);
 	}
 
 	@Test
-	public void when_country_parameter_is_not_null_and_country_is_present_then_is_valid(){
-		boolean actual=validator.isValid(new CountryParameterBuilder().build(1), context);
+	public void when_country_parameter_is_not_null_and_country_is_present_then_is_valid() {
+		boolean actual = this.validator.isValid(
+			new CountryParameterBuilder().build(1), this.context
+		);
 
 		assertTrue(actual);
 	}
 
 	@Test
-	public void when_country_parameter_is_not_null_and_country_not_present_then_is_invalid(){
-		boolean actual=validator.isValid(new CountryParameter(Optional.empty()),context);
+	public void when_country_parameter_is_not_null_and_country_not_present_then_is_invalid() {
+		boolean actual = this.validator.isValid(new CountryParameter(Optional.empty()), this.context);
 
 		assertFalse(actual);
 	}
-
 
 }

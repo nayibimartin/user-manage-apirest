@@ -40,6 +40,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/ErrorResponse'
+  '/users/{userId}':
+    put:
+      tags:
+        - User
+      description: Update user
+      summary: Update user
+      operationId: update
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        $ref: '#/components/requestBodies/UserUpdateRequest'
+      responses:
+        '201':
+          description: Successful updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UserInfoResponse'
+        '400':
+          description: Validation exception.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ValidationErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
 components:
   requestBodies:
     UserCreateRequest:
@@ -73,6 +109,31 @@ components:
                 format: int32
               active:
                 type: boolean
+    UserUpdateRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - age
+              - language
+              - rank
+              - country
+              - active
+            properties:
+              age:
+                type: integer
+                format: int32
+              language:
+                type: string
+              rank:
+                type: integer
+                format: int32
+              country:
+                type: integer
+                format: int32
+              active:
+                type: boolean
   responses:
     ErrorResponse:
       description: Generic error response
@@ -83,11 +144,16 @@ components:
             required:
               - code
               - message
+              - details
             properties:
               code:
                 type: string
               message:
                 type: string
+              details:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorDetails'
     ValidationErrorResponse:
       description: Validation error response
       content:
@@ -99,6 +165,17 @@ components:
             properties:
               errors:
                 $ref: '#/components/schemas/FormErrors'
+    UserInfoResponse:
+      description: User Information
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - user
+            properties:
+              user:
+                $ref: '#/components/schemas/UserResponse'
   schemas:
     FieldErrors:
       required:
@@ -133,3 +210,38 @@ components:
           items:
             type: string
             description: General form errors or referring to several fields
+    ErrorDetails:
+      type: object
+      properties:
+        value:
+          type: string
+        message:
+          type: string
+    UserResponse:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - age
+        - language
+        - rank
+        - country
+        - active
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+          format: int32
+        language:
+          type: string
+        rank:
+          type: integer
+          format: int32
+        countryId:
+          type: integer
+          format: int32
+        active:
+          type: boolean

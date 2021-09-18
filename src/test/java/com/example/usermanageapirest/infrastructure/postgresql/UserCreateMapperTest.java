@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserCreateMapperTest {
 
 	@InjectMocks
-	UserCreateMapper mapper;
+	private UserCreateMapper mapper;
 
 	@Test
 	public void when_data_is_mapped_then_input_is_returned() {
