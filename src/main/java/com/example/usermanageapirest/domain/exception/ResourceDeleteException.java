@@ -1,6 +1,6 @@
 package com.example.usermanageapirest.domain.exception;
 
-public class ResourceDeleteException extends RuntimeException{
+public class ResourceDeleteException extends RuntimeException {
 
 	public ResourceDeleteException(Throwable cause) {
 		super(cause);

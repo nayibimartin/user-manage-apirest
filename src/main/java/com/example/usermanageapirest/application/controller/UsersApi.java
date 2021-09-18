@@ -4,9 +4,9 @@ import com.example.usermanageapirest.application.controller.request.UserCreateRe
 import com.example.usermanageapirest.application.controller.request.UserUpdateRequest;
 import com.example.usermanageapirest.application.controller.response.UserInfoResponse;
 import com.example.usermanageapirest.domain.entity.User;
+import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.exception.ErrorResponse;
-import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,6 +51,7 @@ public interface UsersApi {
 		@Parameter(name = "userId", description = "User Id", required = true) User user,
 		@RequestBody(description = "Update user") UserUpdateRequest userUpdateRequest
 	) throws ResourceCreateException, ValidationException;
+
 	@Operation(
 		summary = "Delete user",
 		description = "Delete user",
@@ -65,7 +66,7 @@ public interface UsersApi {
 	})
 	ResponseEntity<Void> delete(
 		@Parameter(name = "userId", description = "User Id", required = true)
-		@PathVariable("userId") Integer userId
+		@PathVariable("userId") User user
 	);
 
 }

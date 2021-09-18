@@ -13,7 +13,6 @@ import com.example.usermanageapirest.domain.services.input.UserCreateInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,9 +60,9 @@ public class UserApiController implements UsersApi {
 	@Override
 	@DeleteMapping(value = "/{userId}")
 	public ResponseEntity<Void> delete(
-		@PathVariable Integer userId
+		@PathVariable("userId") User user
 	) {
-		this.userServices.delete(userId);
+		this.userServices.delete(user);
 		return ResponseEntity.noContent().build();
 	}
 
