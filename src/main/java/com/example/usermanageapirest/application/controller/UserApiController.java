@@ -1,6 +1,10 @@
 package com.example.usermanageapirest.application.controller;
 
 import com.example.usermanageapirest.application.controller.request.UserCreateRequest;
+import com.example.usermanageapirest.application.controller.response.UniversitiesListResponse;
+import com.example.usermanageapirest.application.controller.response.UniversityInfoResponse;
+import com.example.usermanageapirest.application.controller.response.UserInfoResponse;
+import com.example.usermanageapirest.application.controller.response.UserListResponse;
 import com.example.usermanageapirest.application.controller.request.UserInfoUpdateInputCreator;
 import com.example.usermanageapirest.application.controller.request.UserUpdateRequest;
 import com.example.usermanageapirest.application.controller.response.UserInfoResponse;
@@ -14,10 +18,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -54,6 +61,43 @@ public class UserApiController implements UsersApi {
 		return ResponseEntity.ok(this.userMapper.map(
 			this.userServices.update(this.userInfoUpdateInputCreator.create(user, userUpdateRequest))
 		));
+	}
+
+	@Override
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserListResponse> list(
+		@RequestParam(value = "page", required = false) Integer page,
+		@RequestParam(value = "size", required = false) Integer size,
+		@RequestParam(value = "sort", required = false) String sort,
+		@RequestParam(value = "firstName", required = false) String firstName,
+		@RequestParam(value = "age", required = false) Integer age
+	) {
+		return null;
+	}
+
+	@Override
+	@GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserInfoResponse> getUser(
+		@PathVariable("userId") Integer userId
+	) {
+		return null;
+	}
+
+	@Override
+	@GetMapping(value = "/{userId}/universities", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UniversitiesListResponse> listUniversities(
+		@PathVariable("userId") User userId
+	) {
+		return null;
+	}
+
+	@Override
+	@GetMapping(value = "/{userId}/universities/{universityId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UniversityInfoResponse> getUniversity(
+		@PathVariable("userId") User userId,
+		@PathVariable("universityId") Integer universityId
+	) {
+		return null;
 	}
 
 }

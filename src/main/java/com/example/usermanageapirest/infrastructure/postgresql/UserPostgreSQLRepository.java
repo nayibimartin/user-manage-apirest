@@ -47,4 +47,9 @@ public class UserPostgreSQLRepository implements UserRepository {
 	}
 
 
+	@Override
+	public Optional<User> get(Integer userId) {
+		return this.repository.findById(userId);
+	}
+
 }
