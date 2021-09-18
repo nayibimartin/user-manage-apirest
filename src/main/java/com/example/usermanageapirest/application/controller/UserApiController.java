@@ -64,7 +64,7 @@ public class UserApiController implements UsersApi {
 		@PathVariable Integer userId
 	) {
 		this.userServices.delete(userId);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }
