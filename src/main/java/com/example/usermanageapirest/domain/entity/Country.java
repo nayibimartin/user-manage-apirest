@@ -3,12 +3,12 @@ package com.example.usermanageapirest.domain.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotBlank;
 
 @Accessors(chain = true)
 @Data
@@ -20,10 +20,10 @@ public class Country {
 	@SequenceGenerator(name = "sequence_country", allocationSize = 1)
 	private Integer id;
 
-	@NotBlank
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@NotBlank
+	@Column(name = "language", nullable = false)
 	private String language;
 
 }

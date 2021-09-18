@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -16,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Builder
 @Accessors(chain = true)
@@ -32,27 +32,26 @@ public class User {
 	@SequenceGenerator(name = "sequence_user", allocationSize = 1)
 	private Integer id;
 
-	@NotNull
+	@Column(name = "firstName", nullable = false)
 	private String firstName;
 
-	@NotNull
+	@Column(name = "lastName", nullable = false)
 	private String lastName;
 
-	@NotNull
+	@Column(name = "age", nullable = false)
 	private Integer age;
 
-	@NotNull
+	@Column(name = "language", nullable = false)
 	private String language;
 
-	@NotNull
+	@Column(name = "rank", nullable = false)
 	private Integer rank;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "country_id", nullable = false, foreignKey = @ForeignKey(name = "user_country_id_fk"))
-	@NotNull
 	private Country country;
 
-	@NotNull
+	@Column(name = "active", nullable = false)
 	private boolean active;
 
 }
