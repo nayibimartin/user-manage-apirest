@@ -2,6 +2,10 @@ package com.example.usermanageapirest.domain.services;
 
 import com.example.usermanageapirest.domain.entity.UserBuilder;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
+import com.example.usermanageapirest.application.user.Mapper;
+import com.example.usermanageapirest.domain.entity.User;
+import com.example.usermanageapirest.domain.exception.ResourceDeleteException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.domain.repository.UserRepository;
 import com.example.usermanageapirest.domain.services.input.UserCreateInputBuilder;
@@ -118,4 +122,27 @@ class UserServicesTest {
 
 		Mockito.verify(this.repository).delete(1);
 	}
+
+	@Test
+	public void when_user_delete_not_found_then_exception_is_throw() throws ResourceNotFoundException {
+		Mockito.doThrow(ResourceNotFoundException.class)
+			.when(this.repository).delete(any());
+
+		assertThrows(
+			ResourceNotFoundException.class,
+			() -> this.repository.delete(1)
+		);
+	}
+
+	@Test
+	public void when_user_delete_not_delete_then_exception_is_throw() throws ResourceDeleteException {
+		Mockito.doThrow(ResourceDeleteException.class)
+			.when(this.repository).delete(any());
+
+		assertThrows(
+			ResourceDeleteException.class,
+			() -> this.repository.delete(1)
+		);
+	}
+
 }
