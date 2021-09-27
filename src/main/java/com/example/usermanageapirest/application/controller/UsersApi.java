@@ -9,6 +9,7 @@ import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -58,15 +59,13 @@ public interface UsersApi {
 		operationId = "delete",
 		tags = {"User"})
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "Successful delete user."),
-
+		@ApiResponse(responseCode = "204", description = "Successful delete user.", headers = @Header(name = "location", description = "Url resource", schema = @Schema(type = "string"))),
 		@ApiResponse(responseCode = "403", description = "Resource forbidden", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-
 		@ApiResponse(responseCode = "404", description = "Entity Not Found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	ResponseEntity<Void> delete(
 		@Parameter(name = "userId", description = "User Id", required = true)
-		@PathVariable("userId") User user
+		@PathVariable Integer userId
 	);
 
 }

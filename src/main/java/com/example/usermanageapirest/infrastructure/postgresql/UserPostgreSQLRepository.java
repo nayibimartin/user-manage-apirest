@@ -1,9 +1,9 @@
 package com.example.usermanageapirest.infrastructure.postgresql;
 
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
 import com.example.usermanageapirest.application.user.Mapper;
 import com.example.usermanageapirest.domain.entity.User;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
-import com.example.usermanageapirest.domain.exception.ResourceDeleteException;
 import com.example.usermanageapirest.domain.exception.ResourceUpdateException;
 import com.example.usermanageapirest.domain.repository.UserRepository;
 import com.example.usermanageapirest.domain.services.input.UserCreateInput;
@@ -48,15 +48,8 @@ public class UserPostgreSQLRepository implements UserRepository {
 	}
 
 	@Override
-	public void delete(User user) throws ResourceDeleteException {
-		Optional<User> userFound = this.repository.findById(user.getId());
-		if(userFound.isPresent()) {
-			try {
-				this.repository.deleteById(userFound.get().getId());
-			} catch(ResourceDeleteException e) {
-				e.printStackTrace();
-			}
-		}
+	public void delete(Integer userId) {
+		this.repository.deleteById(userId);
 	}
 
 }

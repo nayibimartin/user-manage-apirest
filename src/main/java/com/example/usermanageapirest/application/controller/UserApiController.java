@@ -60,9 +60,9 @@ public class UserApiController implements UsersApi {
 	@Override
 	@DeleteMapping(value = "/{userId}")
 	public ResponseEntity<Void> delete(
-		@PathVariable("userId") User user
+		@PathVariable Integer userId
 	) {
-		this.userServices.delete(user);
+		this.userServices.delete(userId);
 		return ResponseEntity.noContent().build();
 	}
 

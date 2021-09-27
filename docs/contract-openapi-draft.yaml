@@ -98,6 +98,12 @@ paths:
       responses:
         '204':
           description: Successful delete user.
+          headers:
+            Location:
+              description: Link to the user delete
+              style: simple
+              schema:
+                type: string
         '403':
           description: Resource forbidden
           content:
