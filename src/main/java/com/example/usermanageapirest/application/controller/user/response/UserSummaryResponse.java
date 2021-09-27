@@ -1,0 +1,14 @@
+package com.example.usermanageapirest.application.controller.user.response;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+@Accessors(chain = true)
+@Data
+public class UserSummaryResponse {
+
+	@JsonProperty("user")
+	private UserDetailsResponse user;
+
+}

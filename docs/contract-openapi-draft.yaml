@@ -68,17 +68,14 @@ paths:
             format: int32
         - name: sort
           in: query
-          description: Sorted results by field and order (use asc/des)
+          description: Sorted results by field ascendant
           required: false
           schema:
             type: string
           examples:
-            firstname.asc:
-              value: "firstName.asc"
-              summary: "Sorted results by firstname ascendant"
-            age.desc:
-              value: "age.desc"
-              summary: "Sorted results by age descendant"
+            firstName:
+              value: "firstName"
+              summary: "Sorted results by firstName ascendant"
         - name: firstName
           in: query
           description: Name of the user to filter by
@@ -277,7 +274,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/UniversityInfoResponse'
+                $ref: '#/components/responses/UniversitiesResponse'
         '404':
           description: Entity not found
           content:
@@ -420,8 +417,8 @@ components:
             type: object
             properties:
               universities:
-                $ref: '#/components/schemas/UniversitiesResponse'
-    UniversityInfoResponse:
+                $ref: '#/components/responses/UniversitiesResponse'
+    UniversitiesResponse:
       description: University Information
       content:
         application/json:
@@ -524,10 +521,10 @@ components:
     UserDetailsResponse:
       type: object
       required:
-        - firstname
-        - lastname
+        - firstName
+        - lastName
         - age
-        - country
+        - countryId
       properties:
         firstname:
           type: string
@@ -536,13 +533,9 @@ components:
         age:
           type: integer
           format: int32
-        country:
-          type: string
-    UniversitiesResponse:
-      type: object
-      properties:
-        university:
-          $ref: '#/components/schemas/UniversityDetailsResponse'
+        countryId:
+          type: integer
+          format: int32
     UniversityDetailsResponse:
       type: object
       required:
