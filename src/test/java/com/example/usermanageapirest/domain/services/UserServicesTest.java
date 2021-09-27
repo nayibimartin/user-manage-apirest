@@ -1,5 +1,6 @@
 package com.example.usermanageapirest.domain.services;
 
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
 import com.example.usermanageapirest.domain.entity.UserBuilder;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
@@ -14,6 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -110,6 +113,35 @@ class UserServicesTest {
 				.setUserUpdateInput(new UserUpdateInputBuilder().build(1))
 			)
 		);
+	}
+
+	@Test
+	public void when_delete_then_repository_is_used() {
+		Mockito.when(this.repository.find(any())).thenReturn(Optional.of(new UserBuilder().build(1)));
+
+		this.services.delete(1);
+
+		Mockito.verify(this.repository).find(1);
+	}
+
+	@Test
+	public void when_user_delete_not_found_then_exception_is_throw() throws ResourceNotFoundException {
+		Mockito.doThrow(ResourceNotFoundException.class)
+			.when(this.repository).delete(any());
+
+		assertThrows(
+			ResourceNotFoundException.class,
+			() -> this.repository.delete(1)
+		);
+	}
+
+	@Test
+	public void when_user_delete_not_found_then_repository_is_used() {
+		Mockito.when(this.repository.find(any())).thenReturn(Optional.of(new UserBuilder().build(1)));
+
+		this.services.delete(1);
+
+		Mockito.verify(this.repository).delete(1);
 	}
 
 }

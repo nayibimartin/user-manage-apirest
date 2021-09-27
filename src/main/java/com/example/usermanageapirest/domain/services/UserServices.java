@@ -1,5 +1,6 @@
 package com.example.usermanageapirest.domain.services;
 
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
 import com.example.usermanageapirest.domain.entity.User;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import com.example.usermanageapirest.domain.exception.ResourceUpdateException;
@@ -10,6 +11,8 @@ import com.example.usermanageapirest.domain.services.input.UserInfoUpdateInput;
 import com.example.usermanageapirest.domain.services.validator.UserInputValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServices {
@@ -36,4 +39,10 @@ public class UserServices {
 		return this.userRepository.update(input);
 	}
 
+	public void delete(Integer userId) throws ResourceNotFoundException {
+		Optional<User> userFound = this.userRepository.find(userId);
+		if(userFound.isPresent())
+			this.userRepository.delete(userId);
+		else throw new ResourceNotFoundException(String.format("Cannot find user %s", userId));
+	}
 }

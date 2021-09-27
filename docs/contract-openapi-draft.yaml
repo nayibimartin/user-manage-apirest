@@ -27,7 +27,12 @@ paths:
         $ref: '#/components/requestBodies/UserCreateRequest'
       responses:
         '201':
-          description: Successful created user.
+          description: Successful created user
+          headers:
+            Location:
+              description: Link to the created user
+              schema:
+                type: string
         '400':
           description: Validation exception.
           content:
@@ -58,7 +63,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserUpdateRequest'
       responses:
-        '201':
+        '200':
           description: Successful updated user.
           content:
             application/json:
@@ -72,6 +77,41 @@ paths:
                 $ref: '#/components/responses/ValidationErrorResponse'
         '403':
           description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+        - User
+      description: Delete user by id
+      summary: Delete user by id
+      operationId: delete
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Successful delete user.
+          headers:
+            Location:
+              description: Link to the user delete
+              style: simple
+              schema:
+                type: string
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
           content:
             application/json:
               schema:

@@ -4,11 +4,12 @@ import com.example.usermanageapirest.application.controller.request.UserCreateRe
 import com.example.usermanageapirest.application.controller.request.UserUpdateRequest;
 import com.example.usermanageapirest.application.controller.response.UserInfoResponse;
 import com.example.usermanageapirest.domain.entity.User;
+import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.exception.ErrorResponse;
-import com.example.usermanageapirest.domain.exception.ResourceCreateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Tag(name = "User", description = "Operations to manage users")
 public interface UsersApi {
@@ -50,4 +52,20 @@ public interface UsersApi {
 		@Parameter(name = "userId", description = "User Id", required = true) User user,
 		@RequestBody(description = "Update user") UserUpdateRequest userUpdateRequest
 	) throws ResourceCreateException, ValidationException;
+
+	@Operation(
+		summary = "Delete user",
+		description = "Delete user",
+		operationId = "delete",
+		tags = {"User"})
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "204", description = "Successful delete user.", headers = @Header(name = "location", description = "Url resource", schema = @Schema(type = "string"))),
+		@ApiResponse(responseCode = "403", description = "Resource forbidden", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+		@ApiResponse(responseCode = "404", description = "Entity Not Found", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	})
+	ResponseEntity<Void> delete(
+		@Parameter(name = "userId", description = "User Id", required = true)
+		@PathVariable Integer userId
+	);
+
 }

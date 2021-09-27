@@ -1,5 +1,6 @@
 package com.example.usermanageapirest.infrastructure.postgresql;
 
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
 import com.example.usermanageapirest.application.user.Mapper;
 import com.example.usermanageapirest.domain.entity.User;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
@@ -46,5 +47,9 @@ public class UserPostgreSQLRepository implements UserRepository {
 		return this.repository.save(this.userInfoUpdateMapper.map(input));
 	}
 
+	@Override
+	public void delete(Integer userId) {
+		this.repository.deleteById(userId);
+	}
 
 }
