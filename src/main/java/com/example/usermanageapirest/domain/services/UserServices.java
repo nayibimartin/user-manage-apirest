@@ -1,7 +1,9 @@
 package com.example.usermanageapirest.domain.services;
 
+import com.example.usermanageapirest.application.exception.ResourceNotFoundException;
 import com.example.usermanageapirest.domain.entity.User;
 import com.example.usermanageapirest.domain.exception.ResourceCreateException;
+import com.example.usermanageapirest.domain.exception.ResourceFindException;
 import com.example.usermanageapirest.domain.exception.ResourceUpdateException;
 import com.example.usermanageapirest.domain.exception.ValidationException;
 import com.example.usermanageapirest.domain.repository.UserRepository;
@@ -9,6 +11,9 @@ import com.example.usermanageapirest.domain.services.input.UserCreateInput;
 import com.example.usermanageapirest.domain.services.input.UserInfoUpdateInput;
 import com.example.usermanageapirest.domain.services.validator.UserInputValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +39,16 @@ public class UserServices {
 	public User update(UserInfoUpdateInput input) throws ResourceUpdateException, ValidationException {
 		this.validator.validateUserInfoUpdateInput(input);
 		return this.userRepository.update(input);
+	}
+
+	public User get(Integer userId) throws ResourceNotFoundException, ResourceFindException {
+
+		return this.userRepository.find(userId)
+			.orElseThrow(() -> new ResourceNotFoundException(String.format("Cannot find user %s", userId)));
+	}
+
+	public Page<User> list(Pageable pageable, Specification<User> specs) throws ResourceFindException {
+		return this.userRepository.list(pageable, specs);
 	}
 
 }

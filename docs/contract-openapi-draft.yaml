@@ -27,13 +27,87 @@ paths:
         $ref: '#/components/requestBodies/UserCreateRequest'
       responses:
         '201':
-          description: Successful created user.
+          description: Successful created user
+          headers:
+            Location:
+              description: Link to the created user
+              schema:
+                type: string
         '400':
           description: Validation exception.
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/ValidationErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    get:
+      tags:
+        - User
+      description: List of users
+      summary: List of users
+      operationId: list
+      parameters:
+        - name: page
+          in: query
+          description: Number of the page that will be returned starting at 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          description: Number of results per page (20 by default)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          description: Sorted results by field ascendant
+          required: false
+          schema:
+            type: string
+          examples:
+            firstName:
+              value: "firstName"
+              summary: "Sorted results by firstName ascendant"
+        - name: firstName
+          in: query
+          description: Name of the user to filter by
+          required: false
+          schema:
+            type: string
+        - name: age
+          in: query
+          description: Age of the user to filter by
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UserListResponse'
+        '400':
+          description: |
+            Bad request
+            Available codes:
+              - PAGING_INVALID_PAGE: Number of the page is not valid/is not a number
+              - PAGING_INVALID_SIZE: Number of results per page is not valid/is not a number
+              - SORTING_INVALID_FIELD: Field does not exist or it is not sortable
+              - SORTING_INVALID_ORDER: Order is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/BadRequest'
         '403':
           description: Resource forbidden
           content:
@@ -58,7 +132,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserUpdateRequest'
       responses:
-        '201':
+        '200':
           description: Successful updated user.
           content:
             application/json:
@@ -70,6 +144,143 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/ValidationErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    delete:
+      tags:
+        - User
+      description: Delete user by id
+      summary: Delete user by id
+      operationId: delete
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful delete user.
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+    get:
+      tags:
+        - User
+      description: Get user by id
+      summary: Get user by id
+      operationId: getUser
+      parameters:
+        - name: userId
+          in: path
+          description: User Id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UserInfoResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '404':
+          description: Entity Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+  '/users/{userId}/universities':
+    get:
+      tags:
+        - User
+      summary: List of universities
+      description: List of universities
+      operationId: listUniversities
+      parameters:
+        - in: path
+          name: userId
+          description: User id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Universities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UniversitiesListResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+        '403':
+          description: Resource forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+  '/users/{userId}/universities/{universityId}':
+    get:
+      tags:
+        - User
+      summary: Get university by id
+      description: Get university by id
+      operationId: getUniversity
+      parameters:
+        - in: path
+          name: userId
+          description: User id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: universityId
+          description: University id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Universities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/UniversitiesResponse'
+        '404':
+          description: Entity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
         '403':
           description: Resource forbidden
           content:
@@ -176,6 +387,48 @@ components:
             properties:
               user:
                 $ref: '#/components/schemas/UserResponse'
+    UserListResponse:
+      description: List of users
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              page:
+                $ref: '#/components/schemas/PageResponse'
+              users:
+                $ref: '#/components/schemas/UserSummaryResponse'
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+            properties:
+              code:
+                type: string
+    UniversitiesListResponse:
+      description: List of universities
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              universities:
+                $ref: '#/components/responses/UniversitiesResponse'
+    UniversitiesResponse:
+      description: University Information
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - university
+            properties:
+              university:
+                $ref: '#/components/schemas/UniversityDetailsResponse'
   schemas:
     FieldErrors:
       required:
@@ -245,3 +498,51 @@ components:
           format: int32
         active:
           type: boolean
+    PageResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    UserSummaryResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDetailsResponse'
+    UserDetailsResponse:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - age
+        - countryId
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        age:
+          type: integer
+          format: int32
+        countryId:
+          type: integer
+          format: int32
+    UniversityDetailsResponse:
+      type: object
+      required:
+        - name
+        - career
+      properties:
+        name:
+          type: string
+        career:
+          type: string
